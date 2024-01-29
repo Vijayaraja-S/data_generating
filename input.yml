@@ -1,0 +1,12 @@
+columnNames:
+  - column1
+  - column2
+  - column3
+TypesOfData:
+  - value1
+  - value2
+  - value3
+rowCount: 1000
+format: csv
+outputPath: /home/vijayaraja/Documents/
+header: true
