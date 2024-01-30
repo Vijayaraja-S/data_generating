@@ -10,7 +10,6 @@ import org.yaml.snakeyaml.Yaml;
 import java.io.*;
 import java.util.*;
 
-@Builder
 @Data
 public class BeanProcessor {
     private Integer fileCount = 0;
@@ -29,8 +28,8 @@ public class BeanProcessor {
         }
     }
 
-    public Map<String, String> makeColumnsTypeOfDataCombination( String [] columnNames,
-                                                                String [] typesOfData) {
+    public Map<String, String> makeColumnsTypeOfDataCombination(String[] columnNames,
+                                                                String[] typesOfData) {
         Map<String, String> columnDataTypeMap = new LinkedHashMap<>();
         for (int i = 0; i < columnNames.length; i++) {
             columnDataTypeMap.put(columnNames[i], typesOfData[i]);
@@ -41,15 +40,19 @@ public class BeanProcessor {
     public CommonWriter writeData(InputBean inputBean) throws IOException {
         String outputPath = getOutputPath(inputBean);
         assert outputPath != null;
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputPath))){
-            switch (inputBean.getFormat().toUpperCase()){
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(outputPath));
+            switch (inputBean.getFormat().toUpperCase()) {
                 case "CSV":
                     return new CSVFileWriter(writer);
                 case "TXT":
                     return null;
             }
             return null;
+        }catch (IOException e){
+            e.printStackTrace();
         }
+        return null;
     }
 
 
@@ -63,5 +66,12 @@ public class BeanProcessor {
                 return jobFolder + File.separator + "DUMMY_DATA" + String.format("%05d", fileCount) + ".csv";
         }
         return null;
+    }
+
+    public void writeActualData(InputBean inputBean,
+                                CommonWriter commonWriter) {
+        int totalRecordCount = 0;
+
+
     }
 }

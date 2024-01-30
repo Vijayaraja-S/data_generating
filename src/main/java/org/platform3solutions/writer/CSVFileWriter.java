@@ -4,6 +4,7 @@ import com.opencsv.CSVWriter;
 import org.platform3solutions.export.CommonWriter;
 
 import java.io.BufferedWriter;
+import java.io.IOException;
 
 public class CSVFileWriter implements CommonWriter {
     private   CSVWriter csvWriter;
@@ -13,10 +14,10 @@ public class CSVFileWriter implements CommonWriter {
     }
 
     @Override
-    public void HeaderWriter(String[] columns, BufferedWriter writer) {
-
+    public void HeaderWriter(String[] columns) throws IOException {
+        csvWriter.writeNext(columns);
+        csvWriter.flush();
     }
-
     @Override
     public void DataWriter(String[] datum) {
 
